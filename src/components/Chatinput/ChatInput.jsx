@@ -1,17 +1,14 @@
 import { Button } from '@material-ui/core';
 import React, { useRef } from 'react';
 import { ChatInputContainer } from './ChatInput.style';
-import {
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-  setDoc,
-} from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../app/slices/userSlice';
 
 function ChatInput({ channelName, channelId }) {
   const inputRef = useRef(null);
+  const user = useSelector(selectUser);
 
   const sendMessage = async (event) => {
     event.preventDefault();
@@ -24,8 +21,8 @@ function ChatInput({ channelName, channelId }) {
     await addDoc(channelRef, {
       message: inputRef.current.value,
       timestamp: serverTimestamp(),
-      user: 'Mona Da Goat',
-      userImage: '',
+      user: user?.displayName,
+      userImage: user?.photoURL,
     });
     inputRef.current.value = '';
   };

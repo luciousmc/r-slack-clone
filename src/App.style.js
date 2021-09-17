@@ -5,4 +5,8 @@ const AppBody = styled.div`
   height: 100vh;
 `;
 
+export const AppLoading = styled.div``;
+
+export const AppLoadingContents = styled.div``;
+
 export { AppBody };

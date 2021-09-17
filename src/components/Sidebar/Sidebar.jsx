@@ -22,9 +22,12 @@ import {
   serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../app/slices/userSlice';
 
 function Sidebar() {
   const [channels, setChannels] = useState([]);
+  const user = useSelector(selectUser);
 
   useEffect(() => {
     const roomCollectionRef = collection(db, 'rooms');
@@ -50,7 +53,7 @@ function Sidebar() {
           <h2>MONAHS CIRLCE OF FWENDS</h2>
           <h3>
             <FiberManualRecordIcon />
-            Monah Da Goat
+            {user.displayName}
           </h3>
         </SidebarInfo>
         <CreateIcon />

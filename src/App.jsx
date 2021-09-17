@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { AppBody } from './App.style';
+import React, { useEffect, useState } from 'react';
+import { AppBody, AppLoading, AppLoadingContents } from './App.style';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
@@ -12,6 +12,7 @@ import { auth } from '../lib/firebase';
 
 function App() {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -27,6 +28,19 @@ function App() {
       }
     });
   }, []);
+
+  if (loading) {
+    return (
+      <AppLoading>
+        <AppLoadingContents>
+          <img
+            src='https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg'
+            alt='Logo'
+          />
+        </AppLoadingContents>
+      </AppLoading>
+    );
+  }
 
   return (
     <div className='App'>

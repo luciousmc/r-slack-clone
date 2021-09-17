@@ -10,12 +10,14 @@ import {
   HeaderSearch,
 } from './Header.style';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../../app/slices/userSlice';
+import { logout, selectUser } from '../../../app/slices/userSlice';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../lib/firebase';
+import { useSelector } from 'react-redux';
 
 function Header() {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   const signOutUser = () => {
     signOut(auth).then(() => {
@@ -27,10 +29,7 @@ function Header() {
     <HeaderContainer>
       {/* Header Left */}
       <HeaderLeft>
-        <HeaderAvatar
-          // TODO: Add onclick
-          onClick={signOutUser}
-        />
+        <HeaderAvatar src={user?.photoURL} onClick={signOutUser} />
         <AccessTimeIcon />
       </HeaderLeft>
 
