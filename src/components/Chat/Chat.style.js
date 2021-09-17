@@ -44,6 +44,8 @@ const HeaderRight = styled.div`
 
 export const ChatBottom = styled.div``;
 
-const ChatMessages = styled.div``;
+const ChatMessages = styled.div`
+  padding-bottom: 100px;
+`;
 
 export { ChatContainer, ChatHeader, HeaderLeft, HeaderRight, ChatMessages };
