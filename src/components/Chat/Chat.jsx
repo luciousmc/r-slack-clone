@@ -79,40 +79,43 @@ function Chat() {
 
   return (
     <ChatContainer>
-      <>
-        <ChatHeader>
-          <HeaderLeft>
-            <h4>
-              <strong>#{channelDetails?.name}</strong>
-            </h4>
-            <StarBorderOutlinedIcon />
-          </HeaderLeft>
-          <HeaderRight>
-            <p>
-              <InfoOutlinedIcon /> Details
-            </p>
-          </HeaderRight>
-        </ChatHeader>
+      {channelMessages && channelDetails && (
+        <>
+          <ChatHeader>
+            <HeaderLeft>
+              <h4>
+                <strong>#{channelDetails?.name}</strong>
+              </h4>
+              <StarBorderOutlinedIcon />
+            </HeaderLeft>
+            <HeaderRight>
+              <p>
+                <InfoOutlinedIcon /> Details
+              </p>
+            </HeaderRight>
+          </ChatHeader>
 
-        <ChatMessages>
-          {channelMessages?.map((channelMessage) => {
-            const { id, message, timestamp, user, userImage } = channelMessage;
+          <ChatMessages>
+            {channelMessages?.map((channelMessage) => {
+              const { id, message, timestamp, user, userImage } =
+                channelMessage;
 
-            return (
-              <Message
-                key={id}
-                message={message}
-                timestamp={timestamp}
-                user={user}
-                userImage={userImage}
-              />
-            );
-          })}
-          <ChatBottom ref={chatRef} />
-        </ChatMessages>
+              return (
+                <Message
+                  key={id}
+                  message={message}
+                  timestamp={timestamp}
+                  user={user}
+                  userImage={userImage}
+                />
+              );
+            })}
+            <ChatBottom ref={chatRef} />
+          </ChatMessages>
 
-        <ChatInput channelName={channelDetails?.name} channelId={channelId} />
-      </>
+          <ChatInput channelName={channelDetails?.name} channelId={channelId} />
+        </>
+      )}
     </ChatContainer>
   );
 }
