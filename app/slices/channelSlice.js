@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 const channelSlice = createSlice({
   name: 'channel',
   initialState: {
-    roomId: null,
+    channelId: null,
   },
   reducers: {
     enterChannel: (state, action) => {
-      state.roomId = action.payload.roomId;
+      state.channelId = action.payload.channelId;
     },
   },
 });
@@ -16,6 +16,6 @@ const channelSlice = createSlice({
 export const { enterChannel } = channelSlice.actions;
 
 // Selectors
-export const selectRoomId = (state) => state.room.roomId;
+export const selectChannelId = (state) => state.channel.channelId;
 
 export default channelSlice.reducer;

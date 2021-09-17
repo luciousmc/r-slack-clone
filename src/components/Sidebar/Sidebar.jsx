@@ -27,8 +27,8 @@ function Sidebar() {
   const [channels, setChannels] = useState([]);
 
   useEffect(() => {
-    const roomRef = collection(db, 'rooms');
-    const q = query(roomRef, orderBy('timestamp'));
+    const roomCollectionRef = collection(db, 'rooms');
+    const q = query(roomCollectionRef, orderBy('timestamp'));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const rooms = querySnapshot.docs.map((room) => ({
         id: room.id,
