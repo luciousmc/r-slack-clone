@@ -9,12 +9,32 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import CreateIcon from '@material-ui/icons/Create';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AddIcon from '@material-ui/icons/Add';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SidebarOption } from '../SidebarOption/SidebarOption';
 import { SidebarContainer, SidebarHeader, SidebarInfo } from './Sidebar.style';
+import { collection, onSnapshot, query } from 'firebase/firestore';
+import { db } from '../../../lib/firebase';
 
 function Sidebar() {
+  const [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    const roomRef = collection(db, 'rooms');
+    const unsubscribe = onSnapshot(query(roomRef), (querySnapshot) => {
+      const rooms = querySnapshot.docs.map((room) => ({
+        id: room.id,
+        name: room.data().name,
+      }));
+      setChannels(rooms);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   return (
     <SidebarContainer>
       <SidebarHeader>
@@ -40,6 +60,14 @@ function Sidebar() {
       <hr />
 
       <SidebarOption Icon={ExpandMoreIcon} title='Channels' />
+
+      <hr />
+
+      <SidebarOption Icon={AddIcon} addChannelOption title='Add Channel' />
+
+      {channels?.map((channel) => (
+        <SidebarOption key={channel.id} id={channel.id} title={channel.name} />
+      ))}
     </SidebarContainer>
   );
 }
