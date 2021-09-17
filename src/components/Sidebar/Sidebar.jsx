@@ -12,9 +12,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import AddIcon from '@material-ui/icons/Add';
 
 import React, { useEffect, useState } from 'react';
-import { SidebarOption } from '../SidebarOption/SidebarOption';
+import SidebarOption from '../SidebarOption';
 import { SidebarContainer, SidebarHeader, SidebarInfo } from './Sidebar.style';
-import { collection, onSnapshot, query } from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from 'firebase/firestore';
 import { db } from '../../../lib/firebase';
 
 function Sidebar() {
@@ -22,10 +28,12 @@ function Sidebar() {
 
   useEffect(() => {
     const roomRef = collection(db, 'rooms');
-    const unsubscribe = onSnapshot(query(roomRef), (querySnapshot) => {
+    const q = query(roomRef, orderBy('timestamp'));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const rooms = querySnapshot.docs.map((room) => ({
         id: room.id,
         name: room.data().name,
+        timestamp: serverTimestamp(),
       }));
       setChannels(rooms);
     });
