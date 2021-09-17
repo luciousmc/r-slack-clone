@@ -37,6 +37,8 @@ function App() {
             src='https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg'
             alt='Logo'
           />
+
+          {/* <Spinner name='circle' /> */}
         </AppLoadingContents>
       </AppLoading>
     );

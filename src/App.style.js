@@ -7,6 +7,19 @@ const AppBody = styled.div`
 
 export const AppLoading = styled.div``;
 
-export const AppLoadingContents = styled.div``;
+export const AppLoadingContents = styled.div`
+  text-align: center;
+  padding-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  > img {
+    height: 100px;
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+`;
 
 export { AppBody };
