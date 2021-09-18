@@ -9,10 +9,10 @@ import { login, selectUser } from '../app/slices/userSlice';
 import Login from './components/Login';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { Spinner } from './components/Spinner/Spinner';
 
 function App() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ function App() {
     });
   }, []);
 
-  if (loading) {
+  if (!user) {
     return (
       <AppLoading>
         <AppLoadingContents>
@@ -38,7 +38,7 @@ function App() {
             alt='Logo'
           />
 
-          {/* <Spinner name='circle' /> */}
+          <Spinner />
         </AppLoadingContents>
       </AppLoading>
     );

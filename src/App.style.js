@@ -5,11 +5,14 @@ const AppBody = styled.div`
   height: 100vh;
 `;
 
-export const AppLoading = styled.div``;
+export const AppLoading = styled.div`
+  display: grid;
+  place-items: center;
+  height: 100vh;
+`;
 
 export const AppLoadingContents = styled.div`
   text-align: center;
-  padding-bottom: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -18,7 +21,7 @@ export const AppLoadingContents = styled.div`
   > img {
     height: 100px;
     padding: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
   }
 `;
 
