@@ -25,5 +25,12 @@ export const LoginInnerContainer = styled.div`
     text-transform: inherit;
     background-color: #0a8d48;
     color: white;
+    width: 70%;
+  }
+
+  > button + button {
+    background-color: goldenrod;
+    display: block;
+    margin: 5px auto;
   }
 `;

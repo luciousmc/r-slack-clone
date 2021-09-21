@@ -5,7 +5,13 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, selectUser } from '../app/slices/userSlice';
+import {
+  login,
+  selectUser,
+  selectUserIsLoading,
+  setUserIsLoading,
+} from '../app/slices/userSlice';
+import SignUp from './components/SignUp';
 import Login from './components/Login';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../lib/firebase';
@@ -16,46 +22,55 @@ function App() {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    onAuthStateChanged(auth, (currUser) => {
+      if (currUser) {
         dispatch(
           login({
-            displayName: user.displayName,
-            photoURL: user.photoURL,
-            email: user.email,
+            displayName: currUser.displayName,
+            photoURL: currUser.photoURL,
+            email: currUser.email,
           })
         );
       }
     });
   }, []);
 
-  if (!user) {
-    return (
-      <AppLoading>
-        <AppLoadingContents>
-          <img
-            src='https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg'
-            alt='Logo'
-          />
+  // if (loading) {
+  //   return (
+  //     <AppLoading>
+  //       <AppLoadingContents>
+  //         <img
+  //           src='https://cdn.mos.cms.futurecdn.net/SDDw7CnuoUGax6x9mTo7dd.jpg'
+  //           alt='Logo'
+  //         />
 
-          <Spinner />
-        </AppLoadingContents>
-      </AppLoading>
-    );
-  }
+  //         <Spinner />
+  //       </AppLoadingContents>
+  //     </AppLoading>
+  //   );
+  // }
 
   return (
     <div className='App'>
       <Router>
         {!user ? (
-          <Login />
+          <>
+            <Switch>
+              <Route exact path='/'>
+                <Login />
+              </Route>
+              <Route path='/signup'>
+                <SignUp />
+              </Route>
+            </Switch>
+          </>
         ) : (
           <>
             <Header />
             <AppBody>
               <Sidebar />
               <Switch>
-                <Route path='/' exact>
+                <Route exact path='/'>
                   <Chat />
                 </Route>
               </Switch>

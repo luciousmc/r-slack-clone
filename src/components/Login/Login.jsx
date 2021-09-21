@@ -1,15 +1,18 @@
 import { Button } from '@material-ui/core';
 import { signInWithPopup } from 'firebase/auth';
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { login } from '../../../app/slices/userSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { login, selectUserIsLoading } from '../../../app/slices/userSlice';
 import { auth, googleProvider } from '../../../lib/firebase';
 import { LoginContainer, LoginInnerContainer } from './Login.style';
 
 function Login() {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const loading = useSelector(selectUserIsLoading);
 
-  const signIn = () => {
+  const googleSignin = () => {
     signInWithPopup(auth, googleProvider).then((res) => {
       dispatch(
         login({
@@ -21,6 +24,8 @@ function Login() {
     });
   };
 
+  const emailSignIn = () => {};
+
   return (
     <LoginContainer>
       <LoginInnerContainer>
@@ -31,7 +36,10 @@ function Login() {
         <h1>Sign in to the ChatterBox</h1>
         <p>chatterbox.slack.com</p>
 
-        <Button onClick={signIn}>Sign in with Google</Button>
+        <Button onClick={googleSignin}>Sign in with Google</Button>
+        <Button onClick={emailSignIn}>Sign in with Email</Button>
+
+        <Link to='/signup'>Create an Account</Link>
       </LoginInnerContainer>
     </LoginContainer>
   );
