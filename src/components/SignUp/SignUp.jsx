@@ -27,7 +27,7 @@ function SignUp() {
       );
       console.log(userCredential.user);
 
-      await updateProfile(auth.currentUser, {
+      await updateProfile(auth, auth.currentUser, {
         displayName: email,
         photoURL:
           'https://avatars.githubusercontent.com/u/47552603?s=400&u=9d2e64d36c494d1f508fde1cf0387a1fc678582c&v=4',

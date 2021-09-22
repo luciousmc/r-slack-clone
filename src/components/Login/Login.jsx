@@ -4,8 +4,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { login, selectUserIsLoading } from '../../../app/slices/userSlice';
-import { auth, googleProvider } from '../../../lib/firebase';
-import { LoginContainer, LoginInnerContainer } from './Login.style';
+import { auth, facebookProvider, googleProvider } from '../../../lib/firebase';
+import {
+  LoginContainer,
+  LoginInnerContainer,
+  SignInButton,
+} from './Login.style';
 
 function Login() {
   const dispatch = useDispatch();
@@ -24,6 +28,22 @@ function Login() {
     });
   };
 
+  const facebookSignIn = async () => {
+    try {
+      const { user } = await signInWithPopup(auth, facebookProvider);
+
+      dispatch(
+        login({
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          email: user.email,
+        })
+      );
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const emailSignIn = () => {};
 
   return (
@@ -36,8 +56,17 @@ function Login() {
         <h1>Sign in to the ChatterBox</h1>
         <p>chatterbox.slack.com</p>
 
-        <Button onClick={googleSignin}>Sign in with Google</Button>
-        <Button onClick={emailSignIn}>Sign in with Email</Button>
+        <SignInButton google onClick={googleSignin}>
+          Sign in with Google
+        </SignInButton>
+
+        <SignInButton facebook onClick={facebookSignIn}>
+          Sign in with Facebook
+        </SignInButton>
+
+        <SignInButton email onClick={emailSignIn}>
+          Sign in with Email
+        </SignInButton>
 
         <Link to='/signup'>Create an Account</Link>
       </LoginInnerContainer>
