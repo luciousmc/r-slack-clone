@@ -5,7 +5,7 @@ export const SpinnerContainer = styled.div``;
 export const SpinnerCircle = styled.div`
   width: 50px;
   height: 50px;
-  background-image: linear-gradient(to right, lightgreen, purple);
+  background-image: linear-gradient(to right, lightgreen, var(--slack-color));
   padding: 10px;
   border-radius: 50%;
   animation: spin 0.5s linear infinite;
