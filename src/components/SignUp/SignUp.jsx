@@ -10,6 +10,7 @@ import { SignUpContainer } from './SignUp.style';
 function SignUp() {
   const emailRef = useRef('');
   const passwordRef = useRef('');
+  const displayNameRef = useRef('');
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -18,6 +19,7 @@ function SignUp() {
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
+    const displayName = displayNameRef.current.value;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -25,10 +27,9 @@ function SignUp() {
         email,
         password
       );
-      console.log(userCredential.user);
 
       await updateProfile(auth, auth.currentUser, {
-        displayName: email,
+        displayName: displayName || email,
         photoURL:
           'https://avatars.githubusercontent.com/u/47552603?s=400&u=9d2e64d36c494d1f508fde1cf0387a1fc678582c&v=4',
       });
@@ -41,7 +42,6 @@ function SignUp() {
           email: email,
         })
       );
-
       history.replace('/');
     } catch (error) {
       alert(error.message);
@@ -52,12 +52,17 @@ function SignUp() {
     <SignUpContainer>
       <h2>Create an Account</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>
+        <label>
           Email Address: <br />
           <input type='email' name='email' ref={emailRef} required />
         </label>
 
-        <label htmlFor='password'>
+        <label>
+          Display Name <span>(optional)</span>: <br />
+          <input type='text' name='displayName' ref={displayNameRef} />
+        </label>
+
+        <label>
           Password: <br />
           <input type='text' name='password' ref={passwordRef} required />
         </label>

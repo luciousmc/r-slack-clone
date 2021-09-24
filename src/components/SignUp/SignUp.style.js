@@ -25,6 +25,11 @@ export const SignUpContainer = styled.div`
     margin: 5px;
   }
 
+  > form > label > span {
+    font-size: 14px;
+    font-style: italic;
+  }
+
   > form > label > input {
     padding: 10px;
     width: 40ch;
