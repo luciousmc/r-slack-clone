@@ -1,16 +1,23 @@
-import { Button } from '@material-ui/core';
+import { Avatar, Button } from '@material-ui/core';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../../app/slices/userSlice';
 import { auth } from '../../../lib/firebase';
-import { SignUpContainer } from './SignUp.style';
+import {
+  BrowseImageButton,
+  ImageContainer,
+  SignUpContainer,
+} from './SignUp.style';
 
 function SignUp() {
   const emailRef = useRef('');
   const passwordRef = useRef('');
   const displayNameRef = useRef('');
+  const imageFileRef = useRef(null);
+  const [image, setImage] = useState(null);
+
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -30,15 +37,13 @@ function SignUp() {
 
       await updateProfile(auth, auth.currentUser, {
         displayName: displayName || email,
-        photoURL:
-          'https://avatars.githubusercontent.com/u/47552603?s=400&u=9d2e64d36c494d1f508fde1cf0387a1fc678582c&v=4',
+        photoURL: image ? image : <Avatar />,
       });
 
       dispatch(
         login({
           displayName: email,
-          photoURL:
-            'https://avatars.githubusercontent.com/u/47552603?s=400&u=9d2e64d36c494d1f508fde1cf0387a1fc678582c&v=4',
+          photoURL: image ? image : <Avatar />,
           email: email,
         })
       );
@@ -46,6 +51,28 @@ function SignUp() {
     } catch (error) {
       alert(error.message);
     }
+  };
+
+  const handleBrowseClick = (e) => {
+    imageFileRef.current.click();
+  };
+
+  const handleImageChange = (e) => {
+    const chosenImg = e.target.files[0];
+
+    if (chosenImg) {
+      const reader = new FileReader();
+
+      reader.readAsDataURL(chosenImg);
+
+      reader.onload = (eventReader) => {
+        setImage(eventReader.target.result);
+      };
+    }
+  };
+
+  const handleCancelClick = () => {
+    history.push('/');
   };
 
   return (
@@ -58,16 +85,46 @@ function SignUp() {
         </label>
 
         <label>
-          Display Name <span>(optional)</span>: <br />
-          <input type='text' name='displayName' ref={displayNameRef} />
-        </label>
-
-        <label>
           Password: <br />
           <input type='text' name='password' ref={passwordRef} required />
         </label>
 
-        <Button type='submit'>Create Account</Button>
+        <label>
+          Display Name: <span>(optional)</span> <br />
+          <input type='text' name='displayName' ref={displayNameRef} />
+        </label>
+
+        <label>
+          Profile image: <span>(optional)</span>
+          <BrowseImageButton onClick={handleBrowseClick} variant='contained'>
+            {image ? 'Change...' : 'Browse...'}
+          </BrowseImageButton>
+          {image && (
+            <>
+              <ImageContainer>
+                <img src={image ? image : null} alt='' />
+              </ImageContainer>
+            </>
+          )}
+          <input
+            onChange={handleImageChange}
+            ref={imageFileRef}
+            type='file'
+            accept='image/jpg, image/png, image/jpeg, image/bmp'
+            hidden
+          />
+        </label>
+
+        <Button variant='contained' color='primary' type='submit'>
+          Create Account
+        </Button>
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={handleCancelClick}
+        >
+          Cancel
+        </Button>
       </form>
     </SignUpContainer>
   );

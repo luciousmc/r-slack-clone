@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const SignUpContainer = styled.div`
@@ -22,6 +23,7 @@ export const SignUpContainer = styled.div`
   }
 
   > form > label {
+    position: relative;
     margin: 5px;
   }
 
@@ -37,9 +39,33 @@ export const SignUpContainer = styled.div`
   }
 
   > form > button {
-    background-color: hsl(180, 50%, 50%);
-    color: white;
-    margin-top: 15px;
+    /* background-color: hsl(180, 50%, 50%); */
+    /* color: white; */
+    margin-top: 50px;
     font-weight: 600;
+  }
+
+  > form > button + button {
+    margin-top: 5px;
+  }
+`;
+
+export const BrowseImageButton = styled(Button)`
+  position: absolute !important;
+  right: 0 !important;
+  font-size: 12px !important;
+  text-transform: unset !important;
+  background-color: slategray !important;
+  width: 35%;
+  color: white !important;
+`;
+
+export const ImageContainer = styled.div`
+  margin-top: 30px;
+  text-align: center;
+
+  > img {
+    height: 200px;
+    box-shadow: 1px 1px 2px gray;
   }
 `;
