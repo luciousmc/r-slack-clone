@@ -56,15 +56,15 @@ function Login() {
         <h1>Sign in to the ChatterBox</h1>
         <p>chatterbox.slack.com</p>
 
-        <SignInButton google onClick={googleSignin}>
+        <SignInButton google='true' onClick={googleSignin}>
           Sign in with Google
         </SignInButton>
 
-        <SignInButton facebook onClick={facebookSignIn}>
+        <SignInButton facebook='true' onClick={facebookSignIn}>
           Sign in with Facebook
         </SignInButton>
 
-        <SignInButton email onClick={emailSignIn}>
+        <SignInButton email='true' onClick={emailSignIn}>
           Sign in with Email
         </SignInButton>
 

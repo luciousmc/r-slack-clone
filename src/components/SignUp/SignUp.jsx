@@ -1,10 +1,11 @@
 import { Avatar, Button } from '@material-ui/core';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { ref, uploadString, getDownloadURL } from 'firebase/storage';
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { login } from '../../../app/slices/userSlice';
-import { auth } from '../../../lib/firebase';
+import { auth, storage } from '../../../lib/firebase';
 import {
   BrowseImageButton,
   ImageContainer,
@@ -27,6 +28,7 @@ function SignUp() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
     const displayName = displayNameRef.current.value;
+    let downloadURL;
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -35,21 +37,29 @@ function SignUp() {
         password
       );
 
-      await updateProfile(auth, auth.currentUser, {
+      if (image) {
+        const uploadImgRef = ref(storage, `profileImages/${email}`);
+        const uploadRes = await uploadString(uploadImgRef, image, 'data_url');
+
+        downloadURL = await getDownloadURL(uploadRes.ref);
+      }
+
+      await updateProfile(userCredential.user, {
         displayName: displayName || email,
-        photoURL: image ? image : <Avatar />,
+        photoURL: downloadURL ? downloadURL : null,
       });
+
+      history.replace('/');
 
       dispatch(
         login({
-          displayName: email,
-          photoURL: image ? image : <Avatar />,
+          displayName: displayName || email,
+          photoURL: downloadURL ? downloadURL : null,
           email: email,
         })
       );
-      history.replace('/');
     } catch (error) {
-      alert(error.message);
+      console.log(error);
     }
   };
 
