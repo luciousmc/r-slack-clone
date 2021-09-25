@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { AppBody, AppLoading, AppLoadingContents } from './App.style';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Chat from './components/Chat';
+
+// Redux Imports
 import { useDispatch, useSelector } from 'react-redux';
 import {
   login,
@@ -11,8 +10,14 @@ import {
   selectUserIsLoading,
   setUserIsLoading,
 } from '../app/slices/userSlice';
+// Components
 import SignUp from './components/SignUp';
 import Login from './components/Login';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Chat from './components/Chat';
+import SignIn from './components/SignIn';
+// Firebase
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../lib/firebase';
 import { Spinner } from './components/Spinner/Spinner';
@@ -61,6 +66,9 @@ function App() {
               </Route>
               <Route path='/signup'>
                 <SignUp />
+              </Route>
+              <Route path='/signin'>
+                <SignIn />
               </Route>
             </Switch>
           </>

@@ -44,7 +44,9 @@ function Login() {
     }
   };
 
-  const emailSignIn = () => {};
+  const emailSignIn = () => {
+    history.push('/signin');
+  };
 
   return (
     <LoginContainer>

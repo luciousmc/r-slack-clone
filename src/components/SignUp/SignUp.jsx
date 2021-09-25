@@ -112,7 +112,7 @@ function SignUp() {
           {image && (
             <>
               <ImageContainer>
-                <img src={image ? image : null} alt='' />
+                <img src={image ? image : null} alt='User Image' />
               </ImageContainer>
             </>
           )}
