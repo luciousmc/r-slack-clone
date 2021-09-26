@@ -2,6 +2,7 @@ import { Button } from '@material-ui/core';
 import styled from 'styled-components';
 
 export const SignUpContainer = styled.div`
+  background-color: skyblue;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -10,12 +11,15 @@ export const SignUpContainer = styled.div`
   align-items: center;
 
   > h2 {
+    color: white;
     margin-bottom: 15px;
     font-size: 1.9rem;
     font-weight: 800;
+    text-shadow: 1px 1px 2px gray;
   }
 
   > form {
+    background-color: white;
     display: flex;
     flex-direction: column;
     padding: 25px;
@@ -39,8 +43,6 @@ export const SignUpContainer = styled.div`
   }
 
   > form > button {
-    /* background-color: hsl(180, 50%, 50%); */
-    /* color: white; */
     margin-top: 50px;
     font-weight: 600;
   }

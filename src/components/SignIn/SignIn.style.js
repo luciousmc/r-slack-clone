@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const SignInContainer = styled.div`
+  background-color: lightskyblue;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -9,12 +10,15 @@ export const SignInContainer = styled.div`
   align-items: center;
 
   > h2 {
+    color: white;
     margin-bottom: 15px;
     font-size: 1.9rem;
     font-weight: 800;
+    text-shadow: 1px 1px 2px gray;
   }
 
   > form {
+    background-color: white;
     display: flex;
     flex-direction: column;
     padding: 25px;

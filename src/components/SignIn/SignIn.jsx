@@ -1,17 +1,42 @@
+import { signInWithEmailAndPassword } from '@firebase/auth';
 import { Button } from '@material-ui/core';
 import React, { useRef } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { login } from '../../../app/slices/userSlice';
+import { auth } from '../../../lib/firebase';
 import { SignInContainer } from './SignIn.style';
 
 function SignIn() {
   const history = useHistory();
+  const dispatch = useDispatch();
+
   // Input Refs
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   // Event listeners
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Get input values for login
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      console.log(user);
+      dispatch(
+        login({
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+      history.replace('/');
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancelClick = () => {
