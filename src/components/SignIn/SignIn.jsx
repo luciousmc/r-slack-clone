@@ -15,7 +15,7 @@ function SignIn() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  // Event listeners
+  /*------ EVENT HANDLERS ------*/
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,20 +23,15 @@ function SignIn() {
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
-    try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user);
-      dispatch(
-        login({
-          displayName: user.displayName,
-          email: user.email,
-          photoURL: user.photoURL,
-        })
-      );
-      history.replace('/');
-    } catch (error) {
-      console.log(error);
-    }
+    const { user } = await signInWithEmailAndPassword(auth, email, password);
+    dispatch(
+      login({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      })
+    );
+    history.replace('/');
   };
 
   const handleCancelClick = () => {
